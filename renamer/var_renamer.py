@@ -1,9 +1,7 @@
-from pathlib import Path
-
 import libcst
-from libcst import matchers
 
-class RenameTransformer(libcst.CSTTransformer):
+
+class VarRenameTransformer(libcst.CSTTransformer):
 
     def __init__(self, old_name, target_name):
         self._old_name = old_name
@@ -33,7 +31,7 @@ class RenameTransformer(libcst.CSTTransformer):
 
 
 def rename_variable(source_code: str, old_name: str, target_name: str) -> str:
-    rename_transformer = RenameTransformer(old_name, target_name)
+    rename_transformer = VarRenameTransformer(old_name, target_name)
     original_tree = libcst.parse_module(source_code)
     renamed_tree = original_tree.visit(rename_transformer)
     return renamed_tree.code
